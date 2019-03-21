@@ -8,12 +8,14 @@
         }
     ],
     "require": {
-        "twig/twig": "^2.7",
         "illuminate/database": "^5.8",
         "filp/whoops": "^2.3",
-        "vlucas/phpdotenv": "^3.3"
+        "vlucas/phpdotenv": "^3.3",
+        "eftec/bladeone": "^3.21",
+        "symfony/var-dumper": "^4.2"
     },
     "autoload": {
+        "files": ["src/support/helpers.php"],
         "psr-4": {
             "Kubpro\\Framework\\": "src"
         }

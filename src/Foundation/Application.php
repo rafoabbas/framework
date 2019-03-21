@@ -27,7 +27,7 @@ class Application
      *
      * @var string
      */
-    protected $basePath;
+    public static $basePath;
 
 
 
@@ -127,12 +127,20 @@ class Application
      */
     public function setBasePath($basePath)
     {
-        $this->basePath = rtrim($basePath, '\/');
-
-        return $this;
+        self::$basePath = rtrim($basePath, '\/');
 
     }
 
 
+    /**
+     * get the base path for the application.
+     *
+     * @param  string  $basePath
+     * @return $this
+     */
+    public function getBasePath()
+    {
+        return self::$basePath;
+    }
 
 }
