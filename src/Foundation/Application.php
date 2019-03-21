@@ -11,7 +11,6 @@ use Dotenv\Dotenv as ENV;
 use Whoops\Run as Whoops;
 use Whoops\Handler\PrettyPageHandler as ErrorHandler;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Kubpro\Framework\Routing\Router;
 
 class Application
 {
@@ -41,7 +40,7 @@ class Application
 
     }
 
-    public function singleton($register){
+    public function register($register){
 
         switch ($register){
             case 'woop':
@@ -53,9 +52,7 @@ class Application
             case 'env':
                 $this->registerEnv();
                 break;
-            case 'router':
-                $this->registerRoute();
-                break;
+
             default:
                 throw new \Exception("Method {$register} dont't registered");
                 break;
@@ -65,18 +62,7 @@ class Application
     }
 
 
-    public function registerRoute(){
 
-        $router = new Router();
-
-        foreach (glob($this->basePath."/routes/*.php") as $filename){
-            include_once ($filename);
-        }
-
-        $router->dispatch($_SERVER['QUERY_STRING']);
-
-
-    }
 
 
     /**
