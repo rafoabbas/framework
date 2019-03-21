@@ -33,13 +33,18 @@ class Router
      *
      * @return void
      */
+
+
+
     public  function add($route, $callback){
+
+        $route = ($route) ? $route : '/';
 
         $callback = $this->getCallBack($callback);
 
-        $route = preg_replace('/\//', '\\/', trim($route,'/'));
+        $route = preg_replace('/\//', '\\/', $route);
 
-        $route = preg_replace("/{([0-9a-zA-Z]+)}/", "([0-9a-zA-Z]+)", $route);;
+        $route = preg_replace('/\{([0-9a-zA-Z]+)\}/', '(?P<\1>[0-9a-zA-Z]+)', $route);
 
         $route = '/' . $route . '$/i';
 
@@ -48,9 +53,15 @@ class Router
 
     }
 
+    public function getRoutes(){
+        return $this->routes;
+    }
 
 
-
+    /**
+     * @param $callback
+     * @return array
+     */
     protected function getCallBack($callback){
 
         $results = [];
@@ -91,6 +102,8 @@ class Router
     {
         return $this->callback;
     }
+
+
 
 
     /**
@@ -238,7 +251,7 @@ class Router
             }
         }
 
-        return $url;
+        return "/".$url;
     }
 
     /**
