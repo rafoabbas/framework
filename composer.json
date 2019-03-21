@@ -10,7 +10,8 @@
     "require": {
         "twig/twig": "^2.7",
         "illuminate/database": "^5.8",
-        "filp/whoops": "^2.3"
+        "filp/whoops": "^2.3",
+        "vlucas/phpdotenv": "^3.3"
     },
     "autoload": {
         "psr-4": {

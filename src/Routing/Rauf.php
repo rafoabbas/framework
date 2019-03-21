@@ -3,25 +3,25 @@
 namespace Kubpro\Framework\Routing;
 
 
-class Router
+class Rauf
 {
     /**
      * Associative array of routes (the routing table)
      * @var array
      */
-    protected  $routes = [];
+    protected static $routes = [];
 
     /**
      * Callback parameters
      * @var array
      */
-    protected  $callback = [];
+    protected static $callback = [];
 
     /**
      * Parameters from the matched route
      * @var array
      */
-    protected  $params = [];
+    protected static $params = [];
 
 
 
@@ -33,13 +33,13 @@ class Router
      *
      * @return void
      */
-    public  function add($route, $callback){
+    public static function add($route, $callback){
 
 
 
 
 
-        $callback = $this->getCallBack($callback);
+        $callback = self::getCallBack($callback);
 
         $route = preg_replace('/\//', '\\/', trim($route,'/'));
 
@@ -47,7 +47,7 @@ class Router
 
         $route = '/' . $route . '$/i';
 
-        $this->routes[$route] = $callback;
+        self::$routes[$route] = $callback;
 
 
     }
@@ -93,7 +93,7 @@ class Router
      */
     public function getParams()
     {
-        return $this->callback;
+        return self::$callback;
     }
 
 
@@ -107,12 +107,12 @@ class Router
      */
     public function match($url)
     {
-        foreach ($this->routes as $route => $params) {
+        foreach (self::$routes as $route => $params) {
             if (preg_match($route, $url, $matches)) {
 
-                $this->getVariable($matches);
+                self::getVariable($matches);
 
-                $this->callback = $params;
+                self::$callback = $params;
 
                 return true;
             }
@@ -129,7 +129,7 @@ class Router
 
         unset($matches[0]);
 
-        return $this->params = $matches;
+        return self::$params = $matches;
     }
 
     /**
@@ -140,31 +140,31 @@ class Router
      *
      * @return void
      */
-    public function dispatch($url)
+    public static function dispatch($url)
     {
-        $url = $this->removeQueryStringVariables($url);
+        $url = self::removeQueryStringVariables($url);
 
-        if ($this->match($url)) {
+        if (self::match($url)) {
 
 
-            if ($this->callback['callback']){
+            if (self::$callback['callback']){
 
-                call_user_func_array($this->callback['function'], $this->params);
+                call_user_func_array(self::$callback['function'], self::$params);
 
             }else{
 
-                $controller = $this->callback['controller'];
-                $controller = $this->convertToStudlyCaps($controller);
+                $controller = self::$callback['controller'];
+                $controller = self::convertToStudlyCaps($controller);
 
-                $controller = $this->getNamespace() . $controller;
+                $controller = self::getNamespace() . $controller;
 
                 //echo $controller;
                 if (class_exists($controller)) {
 
 
-                    $controller_object = new $controller($this->params);
-                    $action = $this->callback['action'];
-                    $action = $this->convertToCamelCase($action);
+                    $controller_object = new $controller(self::$params);
+                    $action = self::$callback['action'];
+                    $action = self::convertToCamelCase($action);
                     if (is_callable([$controller_object, $action])) {
                         $controller_object->$action();
                     } else {
@@ -189,7 +189,7 @@ class Router
      *
      * @return string
      */
-    protected function convertToStudlyCaps($string)
+    protected static function convertToStudlyCaps($string)
     {
         return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
     }
@@ -202,9 +202,9 @@ class Router
      *
      * @return string
      */
-    protected function  convertToCamelCase($string)
+    protected static function  convertToCamelCase($string)
     {
-        return lcfirst($this->convertToStudlyCaps($string));
+        return lcfirst(self::convertToStudlyCaps($string));
     }
 
     /**
@@ -255,8 +255,8 @@ class Router
     {
         $namespace = 'App\Controllers\\';
 
-        if (array_key_exists('namespace', $this->callback) && strlen($this->callback['namespace'])>1) {
-            $namespace .= $this->callback['namespace']."\\";
+        if (array_key_exists('namespace', self::$callback) && strlen(self::$callback['namespace'])>1) {
+            $namespace .= self::$callback['namespace']."\\";
         }
 
         return $namespace;
