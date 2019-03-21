@@ -1,6 +1,9 @@
 {
     "name": "kubpro/framework",
     "description": "Kubpro Simple Framework",
+    "keywords": ["framework","kubpro"],
+    "license": "MIT",
+    "homepage": "https://kubpro.com",
     "support": {
         "source": "https://github.com/rafoabbas/framework"
     },

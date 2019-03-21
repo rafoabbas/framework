@@ -35,10 +35,6 @@ class Router
      */
     public  function add($route, $callback){
 
-
-
-
-
         $callback = $this->getCallBack($callback);
 
         $route = preg_replace('/\//', '\\/', trim($route,'/'));
