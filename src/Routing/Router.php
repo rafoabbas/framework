@@ -23,8 +23,6 @@ class Router
      */
     protected  $params = [];
 
-
-
     /**
      * Add a route to the routing table
      *
@@ -33,9 +31,6 @@ class Router
      *
      * @return void
      */
-
-
-
     public  function add($route, $callback){
 
         $route = ($route) ? $route : '/';
@@ -53,6 +48,11 @@ class Router
 
     }
 
+    /**
+     * Router
+     * -------------
+     * @return array
+     */
     public function getRoutes(){
         return $this->routes;
     }
@@ -104,8 +104,6 @@ class Router
     }
 
 
-
-
     /**
      * Match the route to the routes in the routing table, setting the $params
      * property if a route is found.
@@ -136,9 +134,13 @@ class Router
      */
     protected function getVariable(array $matches){
 
-        unset($matches[0]);
+        foreach ($matches as $key => $match) {
+            if (is_string($key)) {
+                $this->params[$key] = $match;
+            }
+        }
 
-        return $this->params = $matches;
+        return $this->params;
     }
 
     /**
