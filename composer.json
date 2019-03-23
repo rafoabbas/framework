@@ -29,6 +29,6 @@
             "Kubpro\\Framework\\": "src"
         }
     },
-    "minimum-stability": "dev"
-
+    "minimum-stability": "dev",
+    "version": "1.0"
 }
