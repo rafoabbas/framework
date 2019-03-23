@@ -70,18 +70,18 @@ class Application
      */
     public function registerWhoop(){
         $handler = new ErrorHandler();
+        //ENV
         $handler->blacklist('_ENV','DB_PASSWORD');
         $handler->blacklist('_ENV','DB_USERNAME');
         $handler->blacklist('_ENV','DB_DATABASE');
-        //$handler->getEditorHref('')
+        //ENV
         $handler->setApplicationRootPath(self::$basePath);
-        $handler->setPageTitle('KUBPRO ERROR');
+        $handler->setPageTitle('Whoops, Framework error!');
+
         $whoops = new Whoops;
         $whoops->writeToOutput(env('APP_DEBUG'));
         $whoops->allowQuit(true);
-
         $whoops->pushHandler($handler);
-
         $whoops->register();
 
 
