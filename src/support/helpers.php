@@ -31,6 +31,7 @@ if (! function_exists('base_path')){
     }
 }
 
+
 if ((! function_exists('view'))){
     /**
      * framework view function

@@ -30,7 +30,10 @@ class Application
     public static $basePath;
 
 
-
+    /**
+     * Application constructor.
+     * @param $basePath
+     */
     public function __construct($basePath)
     {
 
@@ -83,9 +86,6 @@ class Application
         $whoops->allowQuit(true);
         $whoops->pushHandler($handler);
         $whoops->register();
-
-
-
     }
 
 
