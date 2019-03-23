@@ -46,7 +46,7 @@ if ((! function_exists('view'))){
 
         $blade = new View($view,$cache,View::MODE_AUTO);
 
-        echo $blade->run("test",$data);
+        echo $blade->run($view,$data);
 
     }
 }
